@@ -1,12 +1,13 @@
-const GameListView = () => {
+export default function  GameListView ({ onGoBack, onOpenPopup }) {
     return (
         <div>
             <div>
-                <button>back button</button>
+                <button onClick={onGoBack}>back button</button>
                 <h1>Game List Headbar</h1>
                 <h3>Mager Logo</h3>
             </div>
             <div>
+                <button onClick={onOpenPopup}>Open Popup Test</button>
                 <ul>
                     <li>Game 1</li>
                     <li>Game 2</li>
@@ -33,4 +34,3 @@ const GameListView = () => {
     );
 };
 
-export default GameListView;
