@@ -1,8 +1,8 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-// Custom APIs for renderer
-const api = {}
+// Custom APIs for renderer // Custom APIs for renderer - WE ADDED THE FUNCTION HERE
+const api = {launchGame: (path) => ipcRenderer.invoke('launch-game', path)}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

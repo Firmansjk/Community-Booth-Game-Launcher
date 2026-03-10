@@ -8,13 +8,31 @@ function App() {
   const [viewState, setViewState] = useState('FEATURED');
   //ini untuk game yang dipilih
   const [selectedGame, setSelectedGame] = useState(null);
+  //anti spam
+  const [isLocked, setIsLocked] = useState(false); // Anti-spam lock
 
-  // Dummy data for testing
-  const dummyGame = { 
-    title: "Bukankah ini my simulator", 
-    dev: "Passapu Studio", 
-    genre: "Simulation",
-    desc: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+const handleLaunch = async (gamePath) => {
+    if (isLocked) return;
+    
+    setIsLocked(true);
+    try {
+      // Calling the bridge we set up in preload
+      await window.api.launchGame(gamePath);
+      
+      // Unlock after 10 seconds
+      setTimeout(() => setIsLocked(false), 10000);
+    } catch (err) {
+      console.error(err);
+      setIsLocked(false);
+    }
+  };
+  //dummy data untuk testing
+  const noraGame = { 
+    title: "Nora The Game", 
+    dev: "Mythparty", 
+    genre: "Mystery, Puzzle",
+    exePath: "C:/Firman/Game/Game Lainnya/Test Mager Launcher/Nora The Game.exe",
+    desc: "A great game for the Makassar booth!" 
   }
 
   return (
@@ -22,13 +40,17 @@ function App() {
       {viewState === 'FEATURED' && (
         <FeaturedGameView 
           onGoToList={() => setViewState('LIST')} 
+          // Assuming FeaturedView has a "Play" button
+          onLaunch={() => handleLaunch(noraGame.exePath)}
+          isLocked={isLocked}
         />
       )}
 
       {viewState === 'LIST' && (
         <GameListView 
           onGoBack={() => setViewState('FEATURED')}
-          onOpenPopup={() => setSelectedGame(dummyGame)}
+          onOpenPopup={() => setSelectedGame(noraGame)}
+          isLocked={isLocked}
         />
       )}
 
@@ -36,6 +58,8 @@ function App() {
         <GameDetailModal 
           game={selectedGame} 
           onClose={() => setSelectedGame(null)} 
+          onLaunch={() => handleLaunch(selectedGame.exePath)}
+          isLocked={isLocked}
         />
       )}
     </div>

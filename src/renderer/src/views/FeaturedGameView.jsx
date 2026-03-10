@@ -1,4 +1,4 @@
-export default function FeaturedGameView ({ onGoToList }) {
+export default function FeaturedGameView ({ onGoToList, onLaunch, isLocked }) {
     return (
         <div>
             <div>
@@ -11,7 +11,7 @@ export default function FeaturedGameView ({ onGoToList }) {
             </div>
             <div>
                 <h2>Right Featured Game Background (larger)</h2>
-                <button>Start Game</button>
+                <button onClick={onLaunch} disabled={isLocked}> {isLocked ? 'Launching...' : 'Start Game'} </button>
             </div>
         </div>
     );

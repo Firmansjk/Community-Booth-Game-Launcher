@@ -1,7 +1,9 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
+import { join, dirname } from 'path'
+import { execFile } from 'child_process' // Added this
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import path from 'path' // Added this
 
 function createWindow() {
   // Create the browser window.
@@ -51,6 +53,18 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  // --- YOUR NEW LAUNCHER LOGIC ---
+  ipcMain.handle('launch-game', async (event, exePath) => {
+    const gameFolder = dirname(exePath)
+    console.log('Main Process: Launching...', exePath)
+
+    execFile(exePath, { cwd: gameFolder }, (error) => {
+      if (error) console.error('Launch Error:', error)
+    })
+    return { success: true }
+  })
+  //---------------------------------
 
   createWindow()
 
