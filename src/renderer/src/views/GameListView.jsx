@@ -8,7 +8,7 @@ export default function  GameListView ({ onGoBack, onOpenPopup }) {
             <header className="game-list__header">
                 {/* <button className="game-list__back-btn" onClick={onGoBack}> ← </button> */}
                 <div className="game-list__logo"></div>
-                <h1 className="game-list__title">Community's Games</h1>
+                <h1 className="game-list__title">MAGER Community's Games</h1>
             </header>
 
             {/* The Line underneath the title */}

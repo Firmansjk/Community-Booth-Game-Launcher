@@ -225,13 +225,25 @@
 
 /* GAME DETAIL MODAL */
 /* --- Modal Overlay --- */
+/* --- Animation --- */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(80px); /* Starts 80 pixels below its final position */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Ends in the exact center */
+  }
+}
+
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.7); /* Darkens the background */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -240,125 +252,159 @@
 }
 
 .modal__content {
-  background-color: #444; /* Dark gray from your Figma */
+  background-color: #4b4b4b; 
   width: 100%;
-  max-width: 1100px;
-  height: 90%;
-  border-radius: 20px;
+  
+  /* 1. INCREASED THE WIDTH (was 900px) */
+  max-width: 1100px; 
+  
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   padding: 30px;
   color: white;
-  position: relative;
-  gap: 20px;
+  
+  /* 2. ADDED THE ANIMATION */
+  /* This makes it slide up smoothly over 0.3 seconds */
+  animation: slideUp 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
 
 /* --- Layout Sections --- */
-.modal__top-row {
+/* --- The 2-Column Split --- */
+.modal__body {
   display: flex;
   gap: 30px;
-  height: 45%;
 }
 
-.modal__poster {
-  width: 200px;
-  background-color: #f1f0a8;
-  border-radius: 12px;
-  flex-shrink: 0;
-}
-
-.modal__info {
-  flex: 1;
+/* --- Left Column (Poster & Meta) --- */
+.modal__left {
+  flex: 0 0 280px; 
   display: flex;
   flex-direction: column;
 }
 
-/* --- Typography & Lines --- */
+.modal__poster {
+  width: 100%;
+  
+  /* INCREASED THE POSTER HEIGHT (was 280px) */
+  height: 380px; 
+  
+  background-color: #e9e596; 
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.modal__info {
+  margin-top: 15px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.modal__info p {
+  margin: 4px 0;
+}
+
+/* --- Right Column (Overview & Screenshots) --- */
+.modal__right {
+  flex: 1; /* Takes all remaining width */
+  display: flex;
+  flex-direction: column;
+}
+
 .modal__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 10px;
-  margin-bottom: 15px;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
 }
 
-.modal__title { font-size: 2rem; margin: 0; }
-.modal__label { font-size: 1.2rem; opacity: 0.8; text-transform: uppercase; }
-
-/* --- Middle Grid (Desc & Video) --- */
-.modal__description-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 20px;
-  flex: 1;
+.modal__header--right {
+  justify-content: flex-end;
+  margin-top: 25px; /* Pushes the screenshots header down */
 }
 
-.modal__text-box, .modal__video-placeholder {
-  background-color: #ccc;
-  color: black;
+.modal__title {
+  font-size: 1.6rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+.modal__label {
+  font-size: 1.2rem;
+}
+
+.modal__text-box {
+  background-color: #d9d9d9; /* Light gray box */
+  color: #111;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 4px;
+  min-height: 100px;
   font-size: 0.9rem;
 }
 
-/* --- Screenshots Section --- */
-.modal__screenshots-container {
-  flex: 1;
-}
-
-.modal__screenshots-header {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+.modal__text-box p {
+  margin: 0;
 }
 
 .modal__screenshot-list {
   display: flex;
   gap: 15px;
-  overflow-x: auto;
-  padding-bottom: 10px;
 }
 
 .modal__screenshot-item {
-  min-width: 280px;
-  height: 160px;
-  background-color: #ccc;
-  border-radius: 8px;
-  flex-shrink: 0;
+  flex: 1; 
+  
+  /* INCREASED THE SCREENSHOT HEIGHT (was 140px) */
+  height: 180px; 
+  
+  background-color: #d9d9d9;
+  border-radius: 4px;
+  object-fit: cover;
 }
 
 /* --- Footer --- */
 .modal__footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  margin-top: 30px;
 }
 
 .modal__close-btn {
-  width: 60px;
-  height: 60px;
-  background-color: #a6a6a6;
-  border-radius: 50%;
+  background: none;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.modal__close-btn:hover {
+  transform: scale(1.1);
 }
 
 .modal__play-btn {
-  padding: 15px 60px;
-  background-color: #d9d9d9;
+  padding: 12px 60px;
+  background-color: #e0e0e0;
+  color: #333;
   border: none;
-  border-radius: 12px;
-  font-size: 1.5rem;
+  border-radius: 6px;
+  font-size: 1.4rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s;
 }
 
-.modal__play-btn:hover { background-color: #fff; }
+.modal__play-btn:hover:not(:disabled) {
+  background-color: #fff;
+}
+
+.modal__play-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.modal__play-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
