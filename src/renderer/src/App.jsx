@@ -1,11 +1,11 @@
 import {  useState  } from 'react'
-import FeaturedGameView from './views/FeaturedGameView'
+//import FeaturedGameView from './views/FeaturedGameView'
 import GameListView from './views/GameListView'
 import GameDetailModal from './views/GameDetailModal'
 
 function App() {
   //ini untuk state management.
-  const [viewState, setViewState] = useState('FEATURED');
+  //const [viewState, setViewState] = useState('FEATURED');
   //ini untuk game yang dipilih
   const [selectedGame, setSelectedGame] = useState(null);
   //anti spam
@@ -36,24 +36,43 @@ const handleLaunch = async (gamePath) => {
   }
 
   return (
-    <div>
-      {viewState === 'FEATURED' && (
-        <FeaturedGameView 
-          onGoToList={() => setViewState('LIST')} 
-          // Assuming FeaturedView has a "Play" button
-          onLaunch={() => handleLaunch(noraGame.exePath)}
-          isLocked={isLocked}
-        />
-      )}
+    // <div>
+    //   {viewState === 'FEATURED' && (
+    //     <FeaturedGameView 
+    //       onGoToList={() => setViewState('LIST')} 
+    //       // Assuming FeaturedView has a "Play" button
+    //       onLaunch={() => handleLaunch(noraGame.exePath)}
+    //       isLocked={isLocked}
+    //     />
+    //   )}
 
-      {viewState === 'LIST' && (
-        <GameListView 
-          onGoBack={() => setViewState('FEATURED')}
-          onOpenPopup={() => setSelectedGame(noraGame)}
-          isLocked={isLocked}
-        />
-      )}
+    //   {viewState === 'LIST' && (
+    //     <GameListView 
+    //       onGoBack={() => setViewState('FEATURED')}
+    //       onOpenPopup={() => setSelectedGame(noraGame)}
+    //       isLocked={isLocked}
+    //     />
+    //   )}
 
+    //   {selectedGame && (
+    //     <GameDetailModal 
+    //       game={selectedGame} 
+    //       onClose={() => setSelectedGame(null)} 
+    //       onLaunch={() => handleLaunch(selectedGame.exePath)}
+    //       isLocked={isLocked}
+    //     />
+    //   )}
+    // </div>
+    <main className="app-root">
+      {/* 1. Main View is always the List View now */}
+      <GameListView 
+        onOpenPopup={() => setSelectedGame(noraGame)}
+        isLocked={isLocked}
+        // If you kept the back button in GameListView, you can use it to close the whole app:
+        // onCloseApp={() => window.close()} 
+      />
+
+      {/* 2. Modal floats on top when selectedGame is not null */}
       {selectedGame && (
         <GameDetailModal 
           game={selectedGame} 
@@ -62,7 +81,7 @@ const handleLaunch = async (gamePath) => {
           isLocked={isLocked}
         />
       )}
-    </div>
+    </main>
   )
 }
 

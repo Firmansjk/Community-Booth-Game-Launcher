@@ -116,12 +116,27 @@
 
 /* --- Header Section --- */
 .game-list__header {
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
+  padding-bottom: 20px; */
   padding-bottom: 20px;
   border-bottom: 2px solid #666; /* The line under the title */
+
+  display: grid;
+  
+  /* THE FIX: 3 Columns. 
+     1fr (takes up left space) | auto (fits the text) | 1fr (takes up right space) */
+  grid-template-columns: 1fr auto 1fr; 
+  
+  align-items: center;
+  margin-bottom: 30px;
+  
+  /* Optional: This aligns the logo perfectly with the left edge of your game cards */
+  width: 98%; 
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .game-list__back-btn {
@@ -144,28 +159,45 @@
 }
 
 .game-list__title {
-  color: #000; /* Matching your black text in Figma */
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  flex-grow: 1;
+  justify-self: center; /* Locks the title to the exact mathematical center */
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #cecece;
+  margin: 0;
 }
 
 .game-list__logo {
-  width: 60px;
-  height: 60px;
-  background-color: #e54e42;
+  justify-self: start; /* Locks the logo to the far left of its column */
+  width: 40px;
+  height: 40px;
+  background-color: #e54e42; /* Red circle */
   border-radius: 50%;
 }
+
+/* --- The Horizontal Line --- */
+/*.game-list__divider {
+  width: 95%; 
+  height: 2px;
+  background-color: #555;
+  margin: 0 auto 40px auto; 
+}*/
 
 /* --- Grid Section --- */
 .game-list__grid {
   flex: 1;
   display: grid;
   /* Creates 5 equal columns */
-  grid-template-columns: repeat(5, 1fr); 
-  gap: 25px;
+  /* grid-template-columns: repeat(5, 1fr);  */
+  /* THE FIX: minmax(0, 1fr) forces them to squeeze into the screen */
+  /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
+  grid-template-columns: repeat(7, 1fr); 
+
+  gap: 20px 15px;
+  margin: 0 10px; /* Space on the sides */
+
   overflow-y: auto; /* Allows scrolling if you have 50+ games */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  padding-top: 10px; /* Space above the first row */
   padding-right: 10px; /* Space for the scrollbar */
 }
 
