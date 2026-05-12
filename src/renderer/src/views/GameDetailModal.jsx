@@ -1,49 +1,56 @@
-export default function GameDetailModal ({ game, onClose, onLaunch, isLocked }) {
-  // Prevent clicks inside the modal from closing it
+export default function GameDetailModal({ game, onClose, onLaunch, isLocked }) {
   const handleContentClick = (e) => e.stopPropagation();
-
-  // Array to render 3 empty screenshot boxes
-  const dummyScreenshots = [1, 2, 3];
 
   return (
     <div className="modal" onClick={onClose}>
       <div className="modal__content" onClick={handleContentClick}>
         
-        {/* --- 2-Column Layout --- */}
         <div className="modal__body">
           
-          {/* LEFT COLUMN */}
+          {/* --- LEFT COLUMN --- */}
           <div className="modal__left">
-            <div className="modal__poster"></div>
+            {game?.posterUrl ? (
+              <img className="modal__poster" src={game.posterUrl} alt={`${game.title} Poster`} />
+            ) : (
+              <div className="modal__poster"></div>
+            )}
+            
             <div className="modal__info">
               <p><strong>Genre :</strong> {game?.genre || "Unknown"}</p>
-              <p><strong>Developer :</strong> {game?.dev || "Author Name"}</p>
+              <p><strong>Developer :</strong> {game?.dev || "Unknown"}</p>
               <p><strong>Social Media :</strong> {game?.social || "N/A"}</p>
             </div>
           </div>
 
-          {/* RIGHT COLUMN */}
+          {/* --- RIGHT COLUMN --- */}
           <div className="modal__right">
             
-            {/* Overview Section */}
             <header className="modal__header">
               <h2 className="modal__title">{game?.title || "Game Title"}</h2>
               <span className="modal__label">Overview</span>
             </header>
             
             <div className="modal__text-box">
-              <p>{game?.desc || "Lorem ipsum dolor sit amet akjmdn akdfkjadkfnjejk adklflakdjsflajk..."}</p>
+              <p>{game?.desc || "No description provided."}</p>
             </div>
 
-            {/* Screenshots Section */}
             <header className="modal__header modal__header--right">
               <span className="modal__label">Screenshots</span>
             </header>
             
             <div className="modal__screenshot-list">
-              {dummyScreenshots.map(num => (
-                <div key={num} className="modal__screenshot-item"></div>
-              ))}
+              {game?.screenshotUrls?.length > 0 ? (
+                game.screenshotUrls.map((url, index) => (
+                  <img key={index} className="modal__screenshot-item" src={url} alt={`Screenshot ${index + 1}`} />
+                ))
+              ) : (
+                // Blank placeholders if no screenshots exist in JSON
+                <>
+                  <div className="modal__screenshot-item"></div>
+                  <div className="modal__screenshot-item"></div>
+                  <div className="modal__screenshot-item"></div>
+                </>
+              )}
             </div>
 
           </div>
@@ -51,7 +58,6 @@ export default function GameDetailModal ({ game, onClose, onLaunch, isLocked }) 
 
         {/* --- FOOTER --- */}
         <footer className="modal__footer">
-          {/* Down Arrow SVG from your Figma */}
           <button className="modal__close-btn" onClick={onClose} title="Close">
             <svg viewBox="0 0 24 24" width="50" height="50">
               <circle cx="12" cy="12" r="11" fill="#a0a0a0" />
@@ -71,4 +77,4 @@ export default function GameDetailModal ({ game, onClose, onLaunch, isLocked }) 
       </div>
     </div>
   );
-};
+}

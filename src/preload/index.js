@@ -1,12 +1,12 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-// Custom APIs for renderer // Custom APIs for renderer - WE ADDED THE FUNCTION HERE
-const api = {launchGame: (path) => ipcRenderer.invoke('launch-game', path)}
+// Custom APIs for renderer
+const api = {
+  launchGame: (path) => ipcRenderer.invoke('launch-game', path),
+  getGamesList: () => ipcRenderer.invoke('get-games-list')
+}
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
