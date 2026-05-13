@@ -111,7 +111,6 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
 /* --- Header Section --- */
@@ -190,19 +189,24 @@
   /* grid-template-columns: repeat(5, 1fr);  */
   /* THE FIX: minmax(0, 1fr) forces them to squeeze into the screen */
   /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
-  grid-template-columns: repeat(7, 1fr); 
+  grid-template-columns: repeat(7, minmax(0, 1fr)); /* Forces columns to stay in bounds */ 
 
-  gap: 20px 15px;
-  margin: 0 10px; /* Space on the sides */
+  gap: 20px 15px; /* 20px top-to-bottom, 15px side-to-side */
+  
+  /* Remove the old margin: 0 10px; and replace with this padding */
+  padding: 20px 15px 40px 15px;  /* Top, Right, Bottom, Left padding */
 
-  overflow-y: auto; /* Allows scrolling if you have 50+ games */
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  padding-top: 10px; /* Space above the first row */
-  padding-right: 10px; /* Space for the scrollbar */
+  overflow-y: auto !important; /* Forces vertical scrolling to be active */
+  overflow-x: hidden;
+}
+
+.game-list__grid::-webkit-scrollbar {
+  display: none;
 }
 
 /* --- Card Block --- */
 .game-list__card {
+  width: 100%; /* --- THE CARD FIX: Stops the card from stretching --- */
   background-color: #f1f0a8;
   aspect-ratio: 3 / 4; /* Makes them tall like game posters */
   border-radius: 12px;
@@ -211,12 +215,57 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   text-align: center;
   font-weight: bold;
+  overflow: hidden;
+  padding: 0;
 }
 
 .game-list__card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  background-color: #fff;
+}
+
+.game-list__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Forces the giant JPG to crop nicely into the card */
+  display: block;
+}
+
+/* --- NEW: The Item Wrapper --- */
+.game-list__item {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;              
+  cursor: pointer;
+  width: 100%;
+  min-width: 0; /* Forces the flex container to stay inside its grid column! */
+  position: relative;
+}
+
+/* --- NEW: The Title Text --- */
+.game-list__item-title {
+  color: #cecece;         
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  
+  /* Prevents super long names from breaking the grid */
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.game-list__item:hover {
+  z-index: 10; /* Forces this specific card to sit on top of everything else */
+}
+
+/* --- UPDATE: Make the hover effect work on the whole item! --- */
+.game-list__item:hover .game-list__card {
   transform: translateY(-10px) scale(1.05);
   box-shadow: 0 10px 20px rgba(0,0,0,0.4);
   background-color: #fff;

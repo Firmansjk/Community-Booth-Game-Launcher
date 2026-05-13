@@ -65,3 +65,42 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* =========================================
+   1. LOCK THE MAIN WINDOW (No accidental panning)
+   ========================================= */
+html, body, #root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden !important; /* Locks the background */
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* =========================================
+   2. CUSTOM SLEEK SCROLLBAR (Spotify / Discord style)
+   ========================================= */
+/* This targets the scrollbar on the whole app */
+::-webkit-scrollbar {
+  width: 10px; /* Nice and thin */
+  background: transparent; /* Removes the ugly white background */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555; /* A subtle dark gray */
+  border-radius: 10px; /* Smooth rounded corners */
+  border: 2px solid #1a1a1a; /* Creates a tiny gap between the scrollbar and the edge */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Lights up slightly when someone hovers over it */
+}
