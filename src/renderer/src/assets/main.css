@@ -330,6 +330,7 @@
   flex: 0 0 280px; 
   display: flex;
   flex-direction: column;
+  margin-top: 17px;
 }
 
 .modal__poster {
@@ -358,6 +359,7 @@
   flex: 1; /* Takes all remaining width */
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .modal__header {
@@ -371,7 +373,6 @@
 
 .modal__header--right {
   justify-content: flex-end;
-  margin-top: 25px; /* Pushes the screenshots header down */
 }
 
 .modal__title {
@@ -397,20 +398,42 @@
   margin: 0;
 }
 
+/* --- The Carousel Container --- */
 .modal__screenshot-list {
   display: flex;
   gap: 15px;
+  
+  /* --- THE CAROUSEL MAGIC --- */
+  overflow-x: auto; /* Turns on horizontal scrolling */
+  overflow-y: hidden;
+  padding-bottom: 12px; /* Leaves a little room at the bottom for the custom scrollbar */
+  width: 100%;
 }
 
+/* --- The Individual Screenshots --- */
 .modal__screenshot-item {
-  flex: 1; 
-  
-  /* INCREASED THE SCREENSHOT HEIGHT (was 140px) */
+  /* flex: 0 0 280px forces every image to stay EXACTLY 280px wide. 
+     They will never shrink, which forces the container to scroll! */
+  flex: 0 0 280px; 
   height: 180px; 
-  
   background-color: #d9d9d9;
   border-radius: 4px;
-  object-fit: cover;
+  object-fit: cover; /* Crops the images nicely so they don't stretch weirdly */
+}
+
+/* --- Custom Sleek Scrollbar just for the screenshots --- */
+.modal__screenshot-list::-webkit-scrollbar {
+  height: 8px; /* Nice and thin */
+}
+.modal__screenshot-list::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+.modal__screenshot-list::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+.modal__screenshot-list::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* --- Footer --- */

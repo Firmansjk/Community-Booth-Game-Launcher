@@ -38,18 +38,16 @@ export default function GameDetailModal({ game, onClose, onLaunch, isLocked }) {
               <span className="modal__label">Screenshots</span>
             </header>
             
+            {/* --- THE UPDATED SCREENSHOT CAROUSEL --- */}
             <div className="modal__screenshot-list">
               {game?.screenshotUrls?.length > 0 ? (
                 game.screenshotUrls.map((url, index) => (
                   <img key={index} className="modal__screenshot-item" src={url} alt={`Screenshot ${index + 1}`} />
                 ))
               ) : (
-                // Blank placeholders if no screenshots exist in JSON
-                <>
-                  <div className="modal__screenshot-item"></div>
-                  <div className="modal__screenshot-item"></div>
-                  <div className="modal__screenshot-item"></div>
-                </>
+                <div style={{ color: '#888', fontStyle: 'italic', padding: '10px 0' }}>
+                  No screenshots available.
+                </div>
               )}
             </div>
 
